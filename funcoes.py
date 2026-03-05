@@ -1,6 +1,6 @@
 def cadastro_usuario():
     nome = input("Digite seu nome completo: ")
-    cpf = input("Digite seu CPF (APENAS NUMEROS: )")
+    cpf = input("Digite seu CPF (APENAS NUMEROS): ")
     nasc = input("Digite sua data de nascimento: ")
 
     if len(cpf) != 11:
@@ -43,6 +43,23 @@ def deposito(conta):
 def verificar_saldo(conta):
     print(f"Saldo Atual R$ {conta['saldo']}")
 
+def sacar(conta):
+    valor = input("Digite o Valor do Saque: \n")
+    if not valor.isdigit():
+        print("Valor IOnvalido! Digite apenas números inteiros!")
+        return
+    valor_int = int(valor)
 
+    if valor_int <= 0 or valor_int > conta ['saldo']:
+        print("Digite um valor válido!")
+        return
+    conta['saldo'] -= valor_int
+    conta['historico'].append(f"Saque de R$ {valor_int}")
+    print(f"Saque de R$ {valor_int} realizado com sucesso")
 
-              
+def mostrar_extrato(conta):
+    if len(conta['historico']) <= 0:
+        print("Nenhuma Movimentação Registrada.")
+    else:
+        for r in conta['historico']:
+            print(r)
